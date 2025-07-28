@@ -55,7 +55,7 @@
 
                          <div class="input-group mb-3">
                              <input type="text" id="referralLink" class="form-control"
-                                 value="<?php echo "http://" . $_SERVER['HTTP_HOST'] . "/Royedge/register.php?ref=" . $user['referral_code']; ?>" readonly>
+                                 value="<?php echo "https://" . $_SERVER['HTTP_HOST'] . "/register.php?ref=" . $user['referral_code']; ?>" readonly>
                              <div class="input-group-append">
                                  <button class="btn btn-primary" onclick="copyReferralLink()">
                                      <i class="fas fa-copy"></i> Copy Link

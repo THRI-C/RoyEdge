@@ -2,14 +2,7 @@
     include 'header.php'  
 ?>
 
-<?php 
- // Handle logout
- if (isset($_POST['logout'])) {
-    $auth->logout();
-    header('Location: ../login.php?message=You have been logged out');
-    exit;
-}   
-?>
+
 <aside class="sidebar" id="sidebar">
     <div class="logo d-flex justify-content-between p-3 w-100">
         <a href="index.html" class="w-50 "><img src="assets/images/logo-white.png" alt="RoyEdge Logo"></a>
@@ -33,7 +26,7 @@
         </ul>
     </nav>
     <div class="signout">
-        <form method="POST">
+        <form method="POST" action="logout.php">
             <button type="submit" id="signout-btn" name="logout" class=" border-0">
                 <i class="ri-logout-box-line"></i> Logout
             </button>

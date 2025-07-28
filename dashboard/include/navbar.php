@@ -1,11 +1,4 @@
-<?php 
-    // Handle logout
-    if (isset($_POST['logout'])) {
-        $auth->logout();
-        header('Location: ../login.php?message=You have been logged out');
-        exit;
-    }
-?>
+
 <div id="overview-navbar" class="dashboard-header">
      <div class="dashboard-title ">
          <button class="border-0 bg-transparent d-inline-block d-md-none" id="sidebar-toggle">
@@ -39,7 +32,7 @@
                      <span>Settings</span>
                  </a>
                  <div class="dropdown-divider"></div>
-                 <form method="POST" class="dropdown-item mb-2">
+                 <form method="POST" action="logout.php" class="dropdown-item mb-2">
                      <button type="submit" name="logout" class="text-danger border-0 bg-transparent btn-danger">
                          <i class="ri-logout-box-line"></i> Logout
                      </button>

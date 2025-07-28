@@ -6,7 +6,7 @@
         exit;
     }
 ?>
- <div id="overview-navbar" class="dashboard-header">
+<div id="overview-navbar" class="dashboard-header">
      <div class="dashboard-title ">
          <button class="border-0 bg-transparent d-inline-block d-md-none" id="sidebar-toggle">
              <i class="fa-solid fa-bars"></i>

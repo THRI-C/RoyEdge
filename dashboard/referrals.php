@@ -1,4 +1,4 @@
- <?php
+<?php
     require_once 'functions/auth.php';
     require_once 'functions/config.php';
     require_once 'functions/package-manager.php';
@@ -35,7 +35,7 @@
     }
     ?>
 
- <?php include 'include/sidebar.php'; ?>
+<?php include 'include/sidebar.php'; ?>
  <div class="main-content">
      <div class="container-fluid py-4">
          <?php include 'include/navbar.php'; ?>

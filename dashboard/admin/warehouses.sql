@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS warehouses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    country VARCHAR(100) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    contact VARCHAR(100) NOT NULL
+); 

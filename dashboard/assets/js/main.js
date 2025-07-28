@@ -1,4 +1,4 @@
-// Avatar dropdown logic
+/** ==================== Avatar Dropdown Utilities ====================== */
 const avatarTrigger = document.getElementById('avatar-trigger');
 const avatarDropdown = document.getElementById('avatar-dropdown');
 
@@ -16,30 +16,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Handle dropdown menu item clicks
-avatarDropdown.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent dropdown from closing when clicking inside
-
-    const action = e.target.closest('.dropdown-item')?.getAttribute('data-action');
-    if (action) {
-        console.log('Action clicked:', action);
-        // Handle different actions
-        switch (action) {
-            case 'edit-profile':
-                // Handle edit profile
-                break;
-            case 'settings':
-                // Handle settings
-                break;
-            case 'logout':
-                // Handle logout
-                break;
-        }
-    }
-});
-
-
-// Sidebar toggle for mobile
+/** ==================== Mobile toggle Utilities ====================== */
 const sidebar = document.getElementById('sidebar');
 const sidebarToggle = document.getElementById('sidebar-toggle');
 const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -73,32 +50,67 @@ window.addEventListener('resize', function () {
     if (window.innerWidth > 900) closeSidebar();
 });
 
-// Avatar dropdown logic (works for both navbar and dashboard header)
-function setupAvatarDropdown(triggerId, dropdownId) {
-    const trigger = document.getElementById(triggerId);
-    const dropdown = document.getElementById(dropdownId);
-    document.addEventListener('click', function (e) {
-        if (trigger && trigger.contains(e.target)) {
-            dropdown.classList.toggle('show');
-        } else if (dropdown && !dropdown.contains(e.target)) {
-            dropdown.classList.remove('show');
-        }
-    });
-    if (dropdown) {
-        dropdown.querySelectorAll('.dropdown-item').forEach(item => {
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
-                const action = this.getAttribute('data-action');
-                if (action === 'logout') {
-                    window.location.href = 'index.php';
-                } else if (action === 'settings') {
-                    document.querySelector('[data-section="settings"]').click();
-                } else if (action === 'edit-profile') {
-                    alert('Edit Profile clicked! (Implement profile editing modal or page)');
-                }
-            });
-        });
-    }
+/** ====================== Edit profile utilities. =======================*/
+function updateFullName() {
+    const firstName = document.getElementById('first_name').value.trim();
+    const lastName = document.getElementById('last_name').value.trim();
+    const fullName = [firstName, lastName].filter(name => name).join(' ');
+    document.getElementById('name').value = fullName || document.getElementById('name').getAttribute('data-username');
 }
-setupAvatarDropdown('avatar-trigger', 'avatar-dropdown');
-setupAvatarDropdown('avatar-trigger-navbar', 'avatar-dropdown-navbar');
+
+// Add event listeners
+document.getElementById('first_name').addEventListener('input', updateFullName);
+document.getElementById('last_name').addEventListener('input', updateFullName);
+
+// Image preview functionality
+document.getElementById('profile_image').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.getElementById('imagePreview');
+            const defaultAvatar = document.getElementById('defaultAvatar');
+
+            if (preview) {
+                preview.src = e.target.result;
+            } else {
+                // Create new image element if doesn't exist
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'profile-image-preview';
+                img.id = 'imagePreview';
+                defaultAvatar.parentNode.replaceChild(img, defaultAvatar);
+            }
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+// Password confirmation validation
+document.getElementById('confirm_password').addEventListener('input', function () {
+    const newPassword = document.getElementById('new_password').value;
+    const confirmPassword = this.value;
+
+    if (newPassword !== confirmPassword) {
+        this.setCustomValidity('Passwords do not match');
+    } else {
+        this.setCustomValidity('');
+    }
+});
+
+// Prevent reloading of pages
+document.addEventListener('submit', (e) => {
+    e.preventDefault();
+})
+
+// Modal open/close for admin suspend/activate
+window.openSuspendModal = function (userId, action) {
+    var url = 'suspend-user.php?id=' + userId + (action === 'activate' ? '&activate=1' : '');
+    var msg = action === 'activate' ? 'Activate this user?' : 'Suspend this user?';
+    document.getElementById('modalBody').textContent = msg;
+    document.getElementById('modalConfirmBtn').setAttribute('href', url);
+    document.getElementById('confirmModal').style.display = 'flex';
+}
+window.closeModal = function () {
+    document.getElementById('confirmModal').style.display = 'none';
+}

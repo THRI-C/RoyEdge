@@ -1,0 +1,207 @@
+/* Admin Dashboard Custom Styles */
+.sidebar,
+.sidebar#sidebar {
+  background: #fca311 !important;
+}
+body,
+.main-content,
+.dashboard-container {
+  background: #fff !important;
+}
+.welcome-section,
+.stat-card,
+.admin-welcome-section,
+.quick-link,
+.quick-links,
+.shipping-groups {
+  background: #fff !important;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.stat-card,
+.quick-link {
+  border-top: 4px solid #fca311 !important;
+}
+.stat-label,
+.membership-label,
+.quick-links-title {
+  color: #fca311 !important;
+  font-weight: 600;
+}
+.stat-value,
+.membership-level,
+.welcome-section h2,
+.admin-welcome-section h2,
+.admin-welcome-section h4 {
+  color: #22223b !important;
+}
+.badge,
+.shipping-icon,
+.user-name {
+  background: #fca311 !important;
+  color: #22223b !important;
+}
+.quick-link {
+  color: #22223b !important;
+  border: 1px solid #fca311 !important;
+  transition: background 0.2s, color 0.2s;
+}
+.quick-link:hover {
+  background: #fca311 !important;
+  color: #fff !important;
+}
+.shipping-icon i {
+  color: #fca311 !important;
+  font-size: 1.5rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.action-icon {
+  font-size: 1.3rem;
+  margin: 0 6px;
+  cursor: pointer;
+  color: #fca311;
+  transition: color 0.2s;
+}
+
+.action-icon:hover {
+  color: #22223b;
+}
+.table-responsive {
+  overflow-x: auto;
+}
+
+.action-icon {
+  font-size: 1.3rem;
+  margin: 0 6px;
+  cursor: pointer;
+  color: #fca311;
+  transition: color 0.2s;
+}
+
+.action-icon:hover {
+  color: #22223b;
+}
+#confirmModal {
+  display: none;
+  background: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+#confirmModal .modal-dialog {
+  max-width: 400px;
+  margin: auto;
+}
+
+#confirmModal .modal-content {
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(252, 163, 17, 0.18);
+  border: none;
+  background: #fff;
+  padding: 0;
+  overflow: hidden;
+}
+
+#confirmModal .modal-header {
+  background: #fca311;
+  color: #22223b;
+  border-bottom: none;
+  padding: 18px 24px 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#confirmModal .modal-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+#confirmModal .close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #22223b;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  margin-left: 10px;
+}
+
+#confirmModal .close:hover {
+  opacity: 1;
+  color: #fca311;
+}
+
+#confirmModal .modal-body {
+  padding: 24px 24px 10px 24px;
+  font-size: 1.1rem;
+  color: #22223b;
+  text-align: center;
+}
+
+#confirmModal .modal-footer {
+  padding: 0 24px 18px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background: none;
+  border-top: none;
+}
+
+#confirmModal .btn-primary {
+  background: #fca311;
+  border: none;
+  color: #22223b;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 8px 18px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#confirmModal .btn-primary:hover {
+  background: #22223b;
+  color: #fff;
+}
+
+#confirmModal .btn-secondary {
+  background: #fff;
+  border: 1px solid #fca311;
+  color: #fca311;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 8px 18px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#confirmModal .btn-secondary:hover {
+  background: #fca311;
+  color: #fff;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.action-icon {
+  font-size: 1.3rem;
+  margin: 0 6px;
+  cursor: pointer;
+  color: #fca311;
+  transition: color 0.2s;
+}
+
+.action-icon:hover {
+  color: #22223b;
+}
+
+/* Modern Modal Styles */

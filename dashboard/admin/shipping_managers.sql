@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS shipping_managers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    region VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(100) NOT NULL
+); 

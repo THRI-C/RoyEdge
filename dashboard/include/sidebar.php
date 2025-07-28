@@ -1,4 +1,16 @@
-<?php include 'header.php' ?>
+
+<?php    
+    include 'header.php'  
+?>
+
+<?php 
+ // Handle logout
+ if (isset($_POST['logout'])) {
+    $auth->logout();
+    header('Location: ../login.php?message=You have been logged out');
+    exit;
+}   
+?>
 <aside class="sidebar" id="sidebar">
     <div class="logo d-flex justify-content-between p-3 w-100">
         <a href="index.html" class="w-50 "><img src="assets/images/logo-white.png" alt="RoyEdge Logo"></a>
@@ -7,22 +19,26 @@
     <nav>
         <ul>
             <li><a href="userdashboard.php" class="active">Overview</a></li>
-            <li><a href="dashboard-add-package.php">Add Package</a></li>
-            <li><a href="dashboard-bulk-order.php">Bulk Order</a></li>
-            <li><a href="dashboard-manage-orders.php">Manage Orders</a></li>
-            <li><a href="dashboard-consolidate.php">Consolidate</a></li>
-            <li><a href="dashboard-consolidated-orders.php">Consolidated Orders</a></li>
-            <li><a href="dashboard-track-shipment.php">Track Shipment</a></li>
-            <li><a href="dashboard-shipping-mark.php">Shipping Mark</a></li>
-            <li><a href="dashboard-shipping-manager.php">Shipping Manager</a></li>
-            <li><a href="dashboard-warehouse.php">Warehouse</a></li>
-            <li><a href="dashboard-referrals.php">Referrals</a></li>
-            <li><a href="dashboard-voice-matters.php">Your Voice Matters</a></li>
-            <li><a href="dashboard-settings.php">Settings</a></li>
+            <li><a href="add-package.php">Add Package</a></li>
+            <li><a href="bulk-order.php">Bulk Order</a></li>
+            <li><a href="manage-orders.php">Manage Orders</a></li>
+            <li><a href="consolidate.php">Consolidate</a></li>
+            <li><a href="consolidated-orders.php">Consolidated Orders</a></li>
+            <li><a href="track-shipment.php">Track Shipment</a></li>
+            <li><a href="shipping-mark.php">Shipping Mark</a></li>
+            <li><a href="shipping-manager.php">Shipping Manager</a></li>
+            <li><a href="warehouse.php">Warehouse</a></li>
+            <li><a href="referrals.php">Referrals</a></li>
+            <li><a href="voice-matters.php">Your Voice Matters</a></li>
+            <li><a href="settings.php">Settings</a></li>
         </ul>
     </nav>
     <div class="signout">
-        <button id="signout-btn"><i class="ri-logout-box-r-line"></i> Sign Out</button>
+        <form method="POST">
+            <button type="submit" id="signout-btn" name="logout" class=" border-0">
+                <i class="ri-logout-box-line"></i> Logout
+            </button>
+        </form>
     </div>
 </aside>
 

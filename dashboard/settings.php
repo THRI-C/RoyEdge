@@ -1,6 +1,7 @@
 <?php
 // settings.php - Complete profile editing with all fields
 require_once 'functions/auth.php';
+require_once 'functions/config.php';
 
 $auth = new Auth($pdo);
 
@@ -21,9 +22,13 @@ $profile = $stmt->fetch();
 
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    error_log("Form submitted via POST");
+    error_log("Available POST keys: " . implode(', ', array_keys($_POST)));
 
     // Handle profile update
     if (isset($_POST['update_profile'])) {
+        error_log("Profile update attempt for user ID: " . $_SESSION['user_id']);
+        error_log("POST data: " . print_r($_POST, true));
         $firstName = trim($_POST['first_name'] ?? '');
         $lastName = trim($_POST['last_name'] ?? '');
         $username = trim($_POST['username'] ?? '');
@@ -69,32 +74,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 if (empty($message)) {
-                    // Update profile with all fields
-                    $stmt = $pdo->prepare("
-                        UPDATE users SET 
-                        first_name = ?, last_name = ?, username = ?, email = ?, 
-                        phone = ?, address = ?, city = ?, state = ?, lga = ?,
-                        postal_code = ?, country = ?, profile_image = ?, 
-                        date_of_birth = ?, updated_at = NOW()
-                        WHERE id = ?
-                    ");
+                    try {
+                        // First check if all columns exist by doing a describe
+                        $checkStmt = $pdo->prepare("DESCRIBE users");
+                        $checkStmt->execute();
+                        $columns = $checkStmt->fetchAll(PDO::FETCH_COLUMN);
+                        error_log("Available columns in users table: " . implode(', ', $columns));
+                        
+                        // Update profile with all fields
+                        $stmt = $pdo->prepare("
+                            UPDATE users SET 
+                            first_name = ?, last_name = ?, username = ?, email = ?, 
+                            phone = ?, address = ?, city = ?, state = ?, lga = ?,
+                            postal_code = ?, country = ?, profile_image = ?, 
+                            date_of_birth = ?
+                            WHERE id = ?
+                        ");
 
-                    $result = $stmt->execute([
-                        $firstName,
-                        $lastName,
-                        $username,
-                        $email,
-                        $phone,
-                        $address,
-                        $city,
-                        $state,
-                        $lga,
-                        $postalCode,
-                        $country,
-                        $profileImage,
-                        $dateOfBirth,
-                        $_SESSION['user_id']
-                    ]);
+                        $result = $stmt->execute([
+                            $firstName,
+                            $lastName,
+                            $username,
+                            $email,
+                            $phone,
+                            $address,
+                            $city,
+                            $state,
+                            $lga,
+                            $postalCode,
+                            $country,
+                            $profileImage,
+                            $dateOfBirth,
+                            $_SESSION['user_id']
+                        ]);
+                        
+                        error_log("SQL executed, affected rows: " . $stmt->rowCount());
 
                     if ($result) {
                         // Update session data
@@ -103,13 +117,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         $message = 'Profile updated successfully!';
                         $messageType = 'success';
+                        error_log("Profile updated successfully for user ID: " . $_SESSION['user_id']);
 
                         // Refresh profile data
                         $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
                         $stmt->execute([$_SESSION['user_id']]);
                         $profile = $stmt->fetch();
                     } else {
-                        $message = 'Failed to update profile';
+                        $message = 'Failed to update profile. Database error.';
+                        error_log("Database update failed for user ID: " . $_SESSION['user_id']);
+                        error_log("SQL error info: " . print_r($stmt->errorInfo(), true));
+                    }
+                    } catch (PDOException $e) {
+                        $message = 'Database error: ' . $e->getMessage();
+                        error_log("PDO Exception in profile update: " . $e->getMessage());
                     }
                 }
             }
@@ -146,7 +167,7 @@ function handleImageUpload($file, $userId)
 
     // Validate file
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    $maxSize = 1 * 1024 * 1024; // 1MB as specified in the original form
+    $maxSize = 5 * 1024 * 1024; // 5MB as specified in the form
 
     if (!in_array($file['type'], $allowedTypes)) {
         return ['success' => false, 'message' => 'Invalid file type. Only JPG, PNG, GIF, and WebP are allowed'];
@@ -384,6 +405,47 @@ function getFullName($profile)
 
 <script>
     // Update the name field when first/last name changes
+    function updateFullName() {
+        const firstName = document.getElementById('first_name').value;
+        const lastName = document.getElementById('last_name').value;
+        const fullName = (firstName + ' ' + lastName).trim() || document.getElementById('username').value;
+        document.getElementById('name').value = fullName;
+    }
+
+    // Add event listeners
+    document.getElementById('first_name').addEventListener('input', updateFullName);
+    document.getElementById('last_name').addEventListener('input', updateFullName);
+
+    // Add form submission debugging
+    document.querySelector('form[method="POST"]').addEventListener('submit', function(e) {
+        console.log('Form is being submitted');
+        alert('Profile update form submitted!');
+        // Don't prevent default - let it submit
+    });
+
+    // Image preview functionality
+    document.getElementById('profile_image').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('imagePreview');
+                const defaultAvatar = document.getElementById('defaultAvatar');
+                
+                if (preview) {
+                    preview.src = e.target.result;
+                } else if (defaultAvatar) {
+                    defaultAvatar.style.display = 'none';
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'profile-image-preview';
+                    img.id = 'imagePreview';
+                    defaultAvatar.parentNode.insertBefore(img, defaultAvatar);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
 </body>
 

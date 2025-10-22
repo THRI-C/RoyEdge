@@ -1,4 +1,4 @@
- <?php
+<?php
     require_once 'functions/auth.php';
     require_once 'functions/config.php';
     require_once 'functions/package-manager.php';
@@ -35,7 +35,7 @@
     }
     ?>
 
- <?php include 'include/sidebar.php'; ?>
+<?php include 'include/sidebar.php'; ?>
  <div class="main-content">
      <div class="container-fluid py-4">
          <?php include 'include/navbar.php'; ?>
@@ -55,7 +55,7 @@
 
                          <div class="input-group mb-3">
                              <input type="text" id="referralLink" class="form-control"
-                                 value="<?php echo "http://" . $_SERVER['HTTP_HOST'] . "/Royedge/register.php?ref=" . $user['referral_code']; ?>" readonly>
+                                 value="<?php echo "https://" . $_SERVER['HTTP_HOST'] . "/register.php?ref=" . $user['referral_code']; ?>" readonly>
                              <div class="input-group-append">
                                  <button class="btn btn-primary" onclick="copyReferralLink()">
                                      <i class="fas fa-copy"></i> Copy Link

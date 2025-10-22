@@ -9,5 +9,5 @@ $auth = new Auth($pdo);
 $auth->logout();
 
 // Redirect to login page with message
-header('Location: ../../login.php?message=You have been logged out');
+header('Location: ../login.php?message=You have been logged out');
 exit();
